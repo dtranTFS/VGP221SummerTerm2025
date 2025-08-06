@@ -9,7 +9,10 @@ void AGameHUD::BeginPlay()
 	Super::BeginPlay();
 
 	// 2. Slate Method
-	ShowSettingsMenu();
+	// ShowSettingsMenu();
+
+	// 3. UMG Method
+	ToggleGameMenuVisibility(StartingGameWidget);
 }
 
 void AGameHUD::DrawHUD()
@@ -48,4 +51,15 @@ void AGameHUD::HideSettingsMenu()
 
 	PlayerOwner->bShowMouseCursor = false;
 	PlayerOwner->SetInputMode(FInputModeGameOnly());
+}
+
+void AGameHUD::ToggleGameMenuVisibility(TSubclassOf<UGameWidget> NewGameWidget)
+{
+	if (GameWidgetContainer) {
+		GameWidgetContainer->RemoveFromParent();
+		GameWidgetContainer = nullptr;
+	}
+
+	GameWidgetContainer = CreateWidget<UGameWidget>(GetWorld(), NewGameWidget);
+	GameWidgetContainer->AddToViewport();
 }

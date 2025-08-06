@@ -6,6 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "Engine/Canvas.h"
 #include "GUI/Slate/SSettingsWidget.h"
+#include "GUI/GameWidget.h"
 #include "GameHUD.generated.h"
 
 /**
@@ -27,10 +28,17 @@ public:
 	// 1. HUD method of Making UI
 	virtual void DrawHUD() override;
 
-	// 2. Saltes method of Making UI
+	// 2. Slates method of Making UI
 	TSharedPtr<class SSettingsWidget> SettingsWidget;
 	TSharedPtr<class SWidget> SlateWidgetContainer;
 
 	void ShowSettingsMenu();
 	void HideSettingsMenu();
+
+	// 3. UMG method of making UI
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UGameWidget> StartingGameWidget;
+	UGameWidget* GameWidgetContainer;
+
+	void ToggleGameMenuVisibility(TSubclassOf<UGameWidget> NewGameWidget);
 };
